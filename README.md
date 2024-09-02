@@ -2,7 +2,7 @@
 
 ## 🚀 About
 
-Scripts to generate football (Soccer!) entries in Contentstack.
+Solution to aid the content modeling in Contentstack.
 
 You will need the following `.env` file:
 
