@@ -1,0 +1,19 @@
+{
+  "name": "contentstack-api-wrapper",
+  "version": "0.0.1",
+  "description": "Solution to aid the content modeling in Contentstack.",
+  "type": "module",
+  "scripts": {
+    "test": "bun --env-file=.env src/test.ts",
+    "migrate": "source .env && bun run csdx cm:stacks:migration --file-path cli-migrate-exmaple.js -k $API_KEY"
+  },
+  "author": "Valtech",
+  "license": "ISC",
+  "devDependencies": {
+    "@contentstack/cli": "^1.23.0",
+    "@contentstack/management": "^1.17.0",
+    "@types/node": "^22.3.0",
+    "consola": "^3.2.3",
+    "minimist": "^1.2.8"
+  }
+}
