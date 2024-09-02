@@ -1,6 +1,10 @@
 import contentstack from "@contentstack/management";
+import type { ContentstackCollection } from "@contentstack/management/types/contentstackCollection";
 import type { ContentTypeData } from "@contentstack/management/types/stack/contentType";
-import type { EntryData } from "@contentstack/management/types/stack/contentType/entry";
+import type {
+  Entry,
+  EntryData,
+} from "@contentstack/management/types/stack/contentType/entry";
 import consola from "consola";
 
 const client = contentstack.client({
@@ -52,6 +56,24 @@ export const createEntry = async (
   return res.uid;
 };
 
+export const getEntry = async (
+  typeUid: string,
+  uid: string
+): Promise<Entry> => {
+  return await client.stack({ api_key }).contentType(typeUid).entry(uid);
+};
+
+export const getEntries = async (
+  typeUid: string
+): Promise<ContentstackCollection<Entry>> => {
+  return await client
+    .stack({ api_key })
+    .contentType(typeUid)
+    .entry()
+    .query()
+    .find();
+};
+
 export const deleteEntry = async (typeUid: string, uid: string) => {
   await client.stack({ api_key }).contentType(typeUid).entry(uid).delete();
 
@@ -59,12 +81,7 @@ export const deleteEntry = async (typeUid: string, uid: string) => {
 };
 
 export const deleteEntries = async (typeUid: string) => {
-  const entries = await client
-    .stack({ api_key })
-    .contentType(typeUid)
-    .entry()
-    .query()
-    .find();
+  const entries = await getEntries(typeUid);
 
   entries.items.forEach(async (entry) => await deleteEntry(typeUid, entry.uid));
 
@@ -79,4 +96,14 @@ export const publishEntry = async (typeUid: string, uid: string) => {
     .publish({ publishDetails });
 
   consola.success(`Published entry: ${res.notice}`);
+};
+
+export const publishEntries = async (typeUid: string) => {
+  const entries = await getEntries(typeUid);
+
+  entries.items.forEach(
+    async (entry) => await publishEntry(typeUid, entry.uid)
+  );
+
+  consola.success(`Deleted entries of content type: ${typeUid}`);
 };
