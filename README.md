@@ -10,7 +10,7 @@ You will need the following `.env` file:
 HOST=eu-api.contentstack.com
 API_KEY=stack_api_key
 USER_EMAIL=login_email_address
-USER_PASSWORD=login_passowrd
+USER_PASSWORD=login_password
 ENVIRONMENTS=development
 LOCALES=en-gb
 ```
