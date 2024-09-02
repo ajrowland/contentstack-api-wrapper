@@ -19,11 +19,11 @@ LOCALES=en-gb
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                          | Action                                      |
-| :------------------------------- | :------------------------------------------ |
-| `bun install`                    | Installs dependencies                       |
-| `bun run test -- --create-model` | Create a type, entry, publish, and remove   |
-| `bun run test -- --delete-model` | Deletes all test entries, and types         |
-| `bun run migrate`                | Run an example migration script via the CLI |
+| Command                          | Action                                        |
+| :------------------------------- | :-------------------------------------------- |
+| `bun install`                    | Installs dependencies                         |
+| `bun run test -- --create-model` | Create a test type, a test entry, and publish |
+| `bun run test -- --delete-model` | Deletes all test entries, and types           |
+| `bun run migrate`                | Run an example migration script via the CLI   |
 
 I've used Bun, but you can use NPM/Node.
