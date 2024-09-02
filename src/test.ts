@@ -1,10 +1,4 @@
-import {
-  createType,
-  createEntry,
-  publishEntry,
-  deleteType,
-  deleteEntries,
-} from "./lib/contentstackApi";
+import { contentType, entry } from "./lib";
 import type { TestEntry } from "./types/content";
 
 const argv = require("minimist")(process.argv.slice(2));
@@ -28,16 +22,17 @@ const testType = {
 };
 
 if (argv["create-model"]) {
-  await createType(testType);
+  await contentType.create(testType);
 
   const testEntry: TestEntry = { title: "Test entry" };
 
-  const entryUid = await createEntry(testType.uid, testEntry);
+  // const entryUid = await createEntry(testType.uid, testEntry);
+  const entryUid = await entry.create(testType.uid, testEntry);
 
-  await publishEntry(testType.uid, entryUid);
+  await entry.publish(testType.uid, entryUid);
 }
 
 if (argv["delete-model"]) {
-  await deleteEntries(testType.uid);
-  await deleteType(testType.uid);
+  await entry.deleteAll(testType.uid);
+  await contentType.delete(testType.uid);
 }
