@@ -32,12 +32,12 @@ if (argv["create-model"]) {
 
   const testEntry: TestEntry = { title: "Test entry" };
 
-  const entryUid = await createEntry("test_type", testEntry);
+  const entryUid = await createEntry(testType.uid, testEntry);
 
-  await publishEntry("test_type", entryUid);
+  await publishEntry(testType.uid, entryUid);
 }
 
 if (argv["delete-model"]) {
-  await deleteEntries("test_type");
-  await deleteType("test_type");
+  await deleteEntries(testType.uid);
+  await deleteType(testType.uid);
 }
