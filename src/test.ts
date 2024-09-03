@@ -1,4 +1,4 @@
-import { contentType, entry } from "./lib";
+import { contentType, entry, asset } from "./lib";
 import type { TestEntry } from "./types/content";
 
 const argv = require("minimist")(process.argv.slice(2));
@@ -26,7 +26,6 @@ if (argv["create-model"]) {
 
   const testEntry: TestEntry = { title: "Test entry" };
 
-  // const entryUid = await createEntry(testType.uid, testEntry);
   const entryUid = await entry.create(testType.uid, testEntry);
 
   await entry.publish(testType.uid, entryUid);
@@ -35,4 +34,10 @@ if (argv["create-model"]) {
 if (argv["delete-model"]) {
   await entry.deleteAll(testType.uid);
   await contentType.delete(testType.uid);
+}
+
+if (argv["create-delete-asset"]) {
+  const res = await asset.create("contentstack-logo.png", "Test asset");
+
+  await asset.delete(res.uid);
 }

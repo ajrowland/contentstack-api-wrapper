@@ -3,6 +3,7 @@ import consola from "consola";
 import { type ClientConfig } from "../types/clientConfig";
 import contentTypeApi from "./contentTypeApi";
 import entryApi from "./entryApi";
+import assetApi from "./assetApi";
 
 const client = contentstack.client({
   host: process.env.HOST,
@@ -33,3 +34,5 @@ const config: ClientConfig = {
 export const contentType = contentTypeApi(config);
 
 export const entry = entryApi(config);
+
+export const asset = assetApi(config);
