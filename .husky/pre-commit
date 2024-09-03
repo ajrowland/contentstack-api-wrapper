@@ -1,1 +1,2 @@
-bun run prettier src --write
+prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+git update-index --again
