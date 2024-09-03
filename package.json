@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "bun --env-file=.env src/test.ts",
-    "migrate": "source .env && bun run csdx cm:stacks:migration --file-path cli-migrate-exmaple.js -k $API_KEY",
-    // "prettier": "bun run prettier src --write"
+    "migrate": "source .env && bun run csdx cm:stacks:migration --file-path cli-migrate-exmaple.js -k $API_KEY"
   },
   "author": "Valtech",
   "license": "ISC",
