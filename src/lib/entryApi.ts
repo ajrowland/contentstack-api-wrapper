@@ -10,10 +10,10 @@ const createEntry = async (
   typeUid: string,
   entry: EntryData
 ): Promise<string> => {
-  const { client, api_key, logger } = config;
+  const { client, api_key, management_token, logger } = config;
 
   const res = await client
-    .stack({ api_key })
+    .stack({ api_key, management_token })
     .contentType(typeUid)
     .entry()
     .create({
@@ -26,38 +26,49 @@ const createEntry = async (
 };
 
 const getEntry = async (
-  config: any,
+  config: ClientConfig,
   typeUid: string,
   uid: string
 ): Promise<Entry> => {
-  const { client, api_key } = config;
+  const { client, management_token, api_key } = config;
 
-  return await client.stack({ api_key }).contentType(typeUid).entry(uid);
+  return client
+    .stack({ api_key, management_token })
+    .contentType(typeUid)
+    .entry(uid);
 };
 
 const getEntries = async (
-  config: any,
+  config: ClientConfig,
   typeUid: string
 ): Promise<ContentstackCollection<Entry>> => {
-  const { client, api_key } = config;
+  const { client, api_key, management_token } = config;
 
   return await client
-    .stack({ api_key })
+    .stack({ api_key, management_token })
     .contentType(typeUid)
     .entry()
     .query()
     .find();
 };
 
-const deleteEntry = async (config: any, typeUid: string, uid: string) => {
-  const { client, api_key, logger } = config;
+const deleteEntry = async (
+  config: ClientConfig,
+  typeUid: string,
+  uid: string
+) => {
+  const { client, api_key, management_token, logger } = config;
 
-  await client.stack({ api_key }).contentType(typeUid).entry(uid).delete();
+  await client
+    .stack({ api_key, management_token })
+    .contentType(typeUid)
+    .entry(uid)
+    .delete();
 
   logger.success(`Deleted entry: ${uid}`);
 };
 
-const deleteEntries = async (config: any, typeUid: string) => {
+const deleteEntries = async (config: ClientConfig, typeUid: string) => {
   const { logger } = config;
 
   const entries = await getEntries(config, typeUid);
@@ -69,11 +80,15 @@ const deleteEntries = async (config: any, typeUid: string) => {
   logger.success(`Deleted entries of content type: ${typeUid}`);
 };
 
-const publishEntry = async (config: any, typeUid: string, uid: string) => {
-  const { client, api_key, publishDetails, logger } = config;
+const publishEntry = async (
+  config: ClientConfig,
+  typeUid: string,
+  uid: string
+) => {
+  const { client, api_key, management_token, publishDetails, logger } = config;
 
   const res = await client
-    .stack({ api_key })
+    .stack({ api_key, management_token })
     .contentType(typeUid)
     .entry(uid)
     .publish({ publishDetails });
@@ -81,7 +96,7 @@ const publishEntry = async (config: any, typeUid: string, uid: string) => {
   logger.success(`Published entry: ${res.notice}`);
 };
 
-const publishEntries = async (config: any, typeUid: string) => {
+const publishEntries = async (config: ClientConfig, typeUid: string) => {
   const { logger } = config;
 
   const entries = await getEntries(config, typeUid);

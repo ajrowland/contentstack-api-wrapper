@@ -9,22 +9,16 @@ const client = contentstack.client({
   host: process.env.HOST,
 });
 
-// Or use management token.
-const res = await client.login({
-  email: process.env.USER_EMAIL,
-  password: process.env.USER_PASSWORD,
-});
-
-consola.success(res.notice);
-
 const api_key = process.env.API_KEY;
 const locales = process.env.LOCALES?.split(",");
 const environments = process.env.ENVIRONMENTS?.split(",");
 const publishDetails = { locales, environments };
+const management_token = process.env.MANAGEMENT_TOKEN;
 
 const config: ClientConfig = {
   client,
   api_key,
+  management_token,
   locales,
   environments,
   publishDetails,

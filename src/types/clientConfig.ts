@@ -4,6 +4,7 @@ import { type ConsolaInstance } from "consola";
 export type ClientConfig = {
   client: ContentstackClient;
   api_key: string;
+  management_token: string;
   locales: string[];
   environments: string[];
   publishDetails: {

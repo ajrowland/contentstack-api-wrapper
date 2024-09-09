@@ -7,14 +7,14 @@ const createAsset = async (
   filename: string,
   title: string
 ): Promise<Asset> => {
-  const { client, api_key, logger } = config;
+  const { client, api_key, management_token, logger } = config;
 
   const asset = {
     upload: path.join("assets/", filename),
     title,
   };
 
-  const res = await client.stack({ api_key }).asset().create({
+  const res = await client.stack({ api_key, management_token }).asset().create({
     asset,
     upload: asset.upload,
   });
@@ -25,14 +25,14 @@ const createAsset = async (
 };
 
 const deleteAsset = async (config: ClientConfig, uid: string) => {
-  const { client, api_key, logger } = config;
+  const { client, api_key, management_token, logger } = config;
 
-  await client.stack({ api_key }).asset(uid).delete();
+  await client.stack({ api_key, management_token }).asset(uid).delete();
 
   logger.success(`Delete asset: ${uid}`);
 };
 
-export default (config: any) => ({
+export default (config: ClientConfig) => ({
   create: (filename: string, title: string) =>
     createAsset(config, filename, title),
   delete: (uid: string) => deleteAsset(config, uid),
